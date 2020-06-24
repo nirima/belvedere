@@ -33,7 +33,7 @@ public class Test1 extends TestCase {
         DSLExec dsl = new DSLExec(getClass().getResource("/test.api"));
         //DSLExec dsl = new DSLExec(getClass().getResource("/petstore_security.api"));
 
-        dsl = new DSLExec(new File("/Users/magnayn/dev/allocate/Integration-APIs/api/allocate/vacancy_booking.api").toURL());
+        //dsl = new DSLExec(new File("/Users/magnayn/dev/allocate/Integration-APIs/api/allocate/vacancy_booking.api").toURL());
 
         //dsl = new DSLExec(new File("/Users/magnayn/dev/allocate/Integration-APIs/api/allocate/schema/common/AsyncResponse.schema").toURL());
 
