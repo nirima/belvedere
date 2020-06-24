@@ -1,0 +1,21 @@
+// Show calling of a function implementing API fragments
+
+def defineEnv() {
+    return {
+        println "DEFINE";
+
+        info {
+            license {
+                name "MIT"
+            }
+            title "Swagger Petstore"
+            version "1.0.0"
+        }
+    }
+}
+
+api {
+
+    evaluate defineEnv();
+
+}

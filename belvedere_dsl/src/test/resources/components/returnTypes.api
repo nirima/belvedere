@@ -1,0 +1,39 @@
+package components
+
+api {
+    openapi "3.0.2"
+
+
+    path("/items") {
+
+        operation(OperationType.GET, 'getItems') {
+
+            response('200') {
+                content('application/json') {
+                    schema {
+                        schema(type: Array, arrayType: "AnItem")
+                    }
+                }
+            }
+
+            response('300') {
+
+                content('application/json') {
+                    schema(type: Array, arrayType: "AnItem") 
+                }
+            }
+        }
+    }
+
+
+    components {
+
+
+        schema('AnItem') {
+            required schema(name: String) {
+            }
+
+
+        }
+    }
+}

@@ -1,0 +1,276 @@
+package crud
+
+// Test we can create sub-paths
+
+api {
+    openapi "3.0.2"
+
+
+    tag("Reference Data") {}
+    tag("Mappings") {}
+
+
+    path("/mappingSets") {
+
+        operation(OperationType.GET, 'getMappingSets') {
+            description "Return a list of mapping sets that you may utilise"
+            tags "Mappings"
+            response('200') {
+                description "Returning a list of mapping sets"
+                content('application/json') {
+                    schema(type: Array, arrayType: "MappingSet")
+                }
+            }
+        }
+    }
+
+    path("/mappingSets/{id}") {
+        operation(OperationType.GET, 'getMappingSetById') {
+            description "Get a mapping set by ID"
+            tags "Mappings"
+
+            parameter(id: String, in: 'path') {
+                description "The ID of the vocabulary type"
+                example "EB7659C5-6AD3-4C1F-8F3F-A5DB1A5E1440"
+            }
+
+            response('200') {
+                description "Returning a list of mapping sets"
+                content('application/json') {
+                    schema {
+                        ref schema: 'MappingSet'
+                    }
+                }
+            }
+        }
+
+        // SUB PATH!
+        path("/mappings") {
+            operation(OperationType.GET, 'getMappings') {
+                description "Return the elements of a mapping set"
+                tags "Mappings"
+
+                parameter(id: String, in: 'path') {
+                    description "The ID of the mapping set"
+                    example "EB7659C5-6AD3-4C1F-8F3F-A5DB1A5E1440"
+                }
+
+                response('200') {
+                    description "Returning a list of mapping set entries"
+                    content('application/json') {
+                        schema(type: Array, arrayType: "Mapping")
+                    }
+                }
+            }
+
+            operation(OperationType.POST, 'createMapping') {
+                description "Create a new entry in a mapping set"
+                tags "Mappings"
+
+                parameter(id: String, in: 'path') {
+                    description "The ID of the mapping set"
+                    example "EB7659C5-6AD3-4C1F-8F3F-A5DB1A5E1440"
+                }
+
+                requestBody {
+                    description "Details of the mapping"
+                    required true
+
+                    content('application/json') {
+                        schema {
+                            //
+                            ref schema: 'Mapping'
+                        }
+
+                    }
+                }
+
+                response('200') {
+                    description "Successfully created"
+                    content('text/plain') {
+                        schema(id: String) {
+                            description "ID of the new entry"
+                        }
+                    }
+                }
+            }
+
+            path("/{mappingId}") {
+                operation(OperationType.GET, 'getMapping') {
+                    description "Return the emapping"
+                    tags "Mappings"
+
+                    parameter(id: String, in: 'path') {
+                        description "The ID of the mapping set"
+                        example "EB7659C5-6AD3-4C1F-8F3F-A5DB1A5E1440"
+                    }
+
+                    parameter(mappingId: String, in: 'path') {
+                        description "The ID of the mapping set element"
+                        example "EB7659C5-6AD3-4C1F-8F3F-A5DB1A5E1440"
+                    }
+
+                    response('200') {
+                        description "Returning a list of vocabularies"
+                        content('application/json') {
+                            schema {
+                                ref schema: 'Mapping'
+                            }
+                        }
+                    }
+                }
+
+                operation(OperationType.PUT, 'putMapping') {
+                    description "Update a mapping"
+                    tags "Mappings"
+
+                    parameter(id: String, in: 'path') {
+                        description "The ID of the vocabulary"
+                        example "EB7659C5-6AD3-4C1F-8F3F-A5DB1A5E1440"
+                    }
+
+                    parameter(mappingId: String, in: 'path') {
+                        description "The ID of the vocabulary element"
+                        example "EB7659C5-6AD3-4C1F-8F3F-A5DB1A5E1440"
+                    }
+
+                    requestBody {
+                        description "Details of the mapping"
+                        required true
+
+                        content('application/json') {
+                            schema {
+                                //
+                                ref schema: 'Mapping'
+                            }
+
+                        }
+                    }
+
+
+                    response('200') {
+                        description "Updated successfully"
+                    }
+                }
+
+                operation(OperationType.DELETE, 'deleteVocabularyEntry') {
+                    description "Delete a vocabulary entry"
+                    tags "Mappings"
+
+                    parameter(id: String, in: 'path') {
+                        description "The ID of the vocabulary"
+                        example "EB7659C5-6AD3-4C1F-8F3F-A5DB1A5E1440"
+                    }
+
+                    parameter(mappingId: String, in: 'path') {
+                        description "The ID of the mapping"
+                        example "EB7659C5-6AD3-4C1F-8F3F-A5DB1A5E1440"
+                    }
+
+                    response('200') {
+                        description "Updated successfully"
+                    }
+                }
+            }
+        }
+
+    }
+
+
+    components {
+
+        schema('VocabularyVariant') {
+            required schema(name: String) {
+                description "Name of the variant. Usually would not contain spaces (as this will be used in URLs)."
+                example "AHFT"
+            }
+
+            schema(description: String) {
+                description "Description of the vocabulary"
+                example "Anytown Hospital NHS Foundation Trust"
+            }
+        }
+
+        schema('Vocabulary') {
+            required schema(id: String) {
+                description "ID of this vocabulary"
+                example "DA32F546-E049-49DE-BDDD-EA466597E27E"
+            }
+
+            required schema(typeId: String) {
+                description "ID of the type of vocabulary that this is an example of"
+                example "D1E3B83E-99A3-4AF3-B95B-3DC2913EDDC2"
+            }
+
+            required schema(code: String) {
+                description "Code for this vocabulary. Unique within the type of vocabulary"
+                example "NCUH"
+            }
+
+            schema(description: String) {
+                description "Optional description of the vocabulary"
+                example "List of grades"
+            }
+        }
+
+        schema('VocabularyType') {
+
+            required schema(id: String) {
+                description "ID of this vocabulary type"
+                example "D1E3B83E-99A3-4AF3-B95B-3DC2913EDDC2"
+            }
+
+            required schema(name: String) {
+                description "Name of the vocabulary. Usually would not contain spaces (as this will be used in URLs)."
+                example "grades"
+            }
+
+            required schema(description: String) {
+                description "Description of the vocabulary"
+                example "List of grades"
+            }
+
+            schema(tags: Array, arrayType: String) {
+                description "Optional array of tags which may be applied"
+            }
+
+        }
+
+        schema('VocabularyElement') {
+            required schema(code: String) {
+                description "Code for the element. Should be unique within the vocabulary"
+                example "ABCD"
+            }
+
+            schema(title: String) {
+                description "Title for the element"
+                example "ABCD"
+            }
+
+        }
+
+        schema('MappingSet') {
+
+            required schema(id: String) {
+                description "ID of this mapping set"
+                example "D1E3B83E-99A3-4AF3-B95B-3DC2913EDDC2"
+            }
+
+            required schema(vocabularyType: 'VocabularyType')
+
+        }
+
+        schema('Mapping') {
+            required schema(id: String) {
+                description "Id of this mapping"
+            }
+
+            required schema(mappingSetId: String)
+
+            required schema(from: 'VocabularyElement')
+
+            required schema(to: 'VocabularyElement')
+
+        }
+    }
+}

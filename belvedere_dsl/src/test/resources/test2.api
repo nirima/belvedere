@@ -1,0 +1,31 @@
+
+
+
+def woo(s) {
+    println s;
+}
+
+def test(x) {
+
+}
+
+//echo "cats"
+println "dogs"
+
+api {
+    woo "123"
+
+    //echo "cat2s"
+    println "dogs2"
+    
+    openapi "3.0.0"
+    path("pets") {
+        test operation(OperationType.POST, 'createPets') {
+            summary "Create a pet"
+        }
+        operation(OperationType.GET, 'createPets') {
+            summary "Create a pet"
+        }
+    }
+
+}

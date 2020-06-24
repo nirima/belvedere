@@ -1,0 +1,49 @@
+api {
+
+    def aws = load 'aws.apimodule'
+
+    aws(uri: "arn:aws:apigateway:eu-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-2:549321807852:function:lambda_interop_vacancyapi/invocations")
+
+    openapi "3.0.2"
+
+    profile if:'aws', then: {
+        security('APIAuthorizer') {
+        }
+
+    }, else: {
+        security('jwt') {
+        }
+    }
+
+    path("/test") {
+        operation(OperationType.POST, 'postTest') {
+            description "send Something"
+
+            evaluate aws();
+
+            response('200') {
+                description "OK"
+            }
+        }
+    }
+    
+    components {
+
+
+        security('APIAuthorizer') {
+            type "apiKey"
+            name "AuthorizationToken"
+            setIn("header")
+            extension("x-amazon-apigateway-authtype", "custom")
+            extension("x-amazon-apigateway-authorizer") {
+                authorizerUri "arn:aws:apigateway:eu-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-2:529795854321:function:lambda_interop_auth/invocations"
+                authorizerCredentials "arn:aws:iam::529795854321:role/iam_for_lambda"
+                authorizerResultTtlInSeconds 300
+                type "token"
+            }
+
+        }
+
+
+    }
+}

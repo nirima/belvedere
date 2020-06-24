@@ -1,0 +1,26 @@
+openapi: 3.0.1
+paths:
+  /thing:
+    get:
+      operationId: doobiedoo
+      responses:
+        200:
+          description: Hooray
+          headers:
+            X-Pagination-Inline:
+              schema:
+                type: string
+            X-Pagination-Link:
+              schema:
+                $ref: '#/components/schemas/XPaginationHeader'
+components:
+  schemas:
+    XPaginationHeader:
+      type: object
+      properties:
+        currentPage:
+          type: integer
+          format: int32
+        nextPage:
+          type: integer
+          format: int32

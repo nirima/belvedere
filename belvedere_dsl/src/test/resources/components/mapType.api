@@ -1,0 +1,22 @@
+package components
+
+api {
+    components {
+        schema('Thing') {
+            required schema('simple': String)
+
+            schema('tags': Map, mapType:String )
+
+
+            schema('tag2':Map) {
+
+                schema(code:int )
+                schema(text:String)
+            }
+
+            schema('tag3':Map, mapType:'Thing')
+            
+
+        }
+    }
+}

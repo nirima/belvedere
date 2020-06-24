@@ -1,0 +1,131 @@
+
+
+api
+        {
+            def foo = 1;
+
+            openapi = "3.0.2"
+            fish = 3;
+
+            println "ARSE"
+
+
+            info {
+                version '1.0.0'
+
+                title "Duties and Events"
+                description: """
+          ## Duties and Events
+"""
+
+                contact {
+                    name "API support"
+                    url "http://www.allocatesoftware.com/"
+                    email "support@allocatesoftware.com"
+                }
+
+
+                extension('logo') {
+                    url "http://www.allocatesoftware.com/wp-content/uploads/sites/31/2017/08/Allocate_logo_digital_Horizontal_RGB_retina.png"
+                    backgroundColor "#FFFFc0"
+                    altText "Allocate Software"
+                }
+
+
+                /*x-logo:
+                  url: "http://www.allocatesoftware.com/wp-content/uploads/sites/31/2017/08/Allocate_logo_digital_Horizontal_RGB_retina.png"
+                  backgroundColor: "#FFFFc0"
+                  altText: "Allocate Software"
+
+                  */
+
+            }
+
+
+            server {
+                url "http://healthsuite.allocatesoftware.com/api/duty/v1"
+            }
+
+            server {
+                url "http://healthsuite.allocatesoftware.com/api/duty/v2"
+            }
+
+            path("/duties") {
+                post {
+                    operationId 'createDuty'
+                    description 'Create a new Duty'
+
+                    requestBody {
+                        description "Duty to be sent to agency"
+                        required true
+
+                        content('application/json') {
+                            schema {
+                                type "object"
+
+                            }
+
+
+                        }
+                    }
+                    response('200') {
+                        description "The worker has been registered successfully"
+                        content('application/json') {
+                            schema {
+                                ref schema:'DutyDetails'
+                            }
+                        }
+                    }
+                }
+            }
+
+            components {
+
+                //include 'duty_details.api'
+
+                schema('ContactDetailsUpdatedEvent') {
+                    description "Some guff"
+                    example " { 'hello': 'there' }";
+
+                    required schema(personId:String) {
+                        description "ASWid of the person"
+                        example "8FE4E2F3-7351-4385-B0C6-1154A440F956"
+                    }
+                    schema(data:String) {
+                        description "Sum Data"
+                    }
+                }
+
+            }
+
+
+            /*      tags:
+                    - Duties
+                    - 3rd Party Rostering
+
+                  requestBody:
+                    description: Duty to be sent to agency
+                    required: true
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/DutyDetails'
+                  responses:
+                    '200':
+                      description: Duty created successfully
+                      content:
+                        text/plain:
+                          schema:
+                            type: string
+                            description: ID of the newly created duty
+                    '202':
+                      description: The duty has been accepted and a response will be returned asyncronously.
+                      content:
+                        application/json:
+                          schema:
+                            $ref: '#/components/schemas/AsyncResponse'
+              */
+
+
+        }
+

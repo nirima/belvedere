@@ -1,0 +1,14 @@
+package com.nirima
+
+api
+{
+    def common_things = load 'module.apimodule';
+
+    common_things {
+
+        my_license {}
+
+    }
+
+
+}

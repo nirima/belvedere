@@ -1,0 +1,23 @@
+package components
+
+
+
+api {
+
+
+    path("/thing/{id}") {
+        operation(OperationType.POST, 'submitThing') {
+
+
+            parameter(id: String, in: 'path') {
+                description "The ID of the thing"
+                example "33C33192-7B8D-4EE0-AD41-47AACF240A29"
+            }
+
+
+        }
+
+    }
+
+
+}

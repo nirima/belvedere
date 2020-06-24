@@ -1,0 +1,17 @@
+package modular
+
+api
+        {
+
+            //   def v = 'hello';
+
+
+            def lf = load 'loaded_file.apimodule'
+            lf.setTextProp("MIT");
+            lf();
+            println "LTP = ${lf.textProp}"
+
+            
+
+        }
+

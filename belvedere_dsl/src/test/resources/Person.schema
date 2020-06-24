@@ -1,0 +1,90 @@
+
+import java.lang.reflect.Array
+
+
+api {
+    components {
+
+
+        schema('WorkingRestriction') {
+            required schema('title': String) {
+            }
+            required schema('validity': 'DateSpan') {
+            }
+            required schema('hoursOfWork') {
+
+              /*
+                ['mon'].each() { day ->
+
+                    schema('mon': 'TimeSpan') {
+                    }
+                }
+                */
+                schema('mon': 'TimeSpan') {
+                }
+                schema('tue': 'TimeSpan') {
+                }
+                schema('wed': 'TimeSpan') {
+                }
+                schema('thu': 'TimeSpan') {
+                }
+                schema('fri': 'TimeSpan') {
+                }
+                schema('sat': 'TimeSpan') {
+                }
+                schema('sun': 'TimeSpan') {
+                }
+                
+                  
+            }
+
+        }
+       
+        /*schema('PersonalPattern') {
+            schema('duty': Array) {
+                schema('shiftGroup': String) {
+                }
+                schema('shift': String) {
+                }
+                schema('rosterLocation': String) {
+                }
+                schema('team': String) {
+                }
+                schema('activityCategory': String) {
+                }
+                schema('activityBenchmark': String) {
+                }
+                schema('activityType': String) {
+                }
+                schema('activityProfile': String) {
+                }
+                schema('work': String) {
+                }
+                schema('start': String) {
+                }
+                schema('end': String) {
+                }
+                schema('monthlyReccurrance': boolean) {
+                }
+            }
+            schema('unavailability': Array) {
+                schema('unavailabilityGroup': String) {
+                }
+                required schema('unavailabilityReason': String) {
+                }
+                schema('work': String) {
+                }
+                required schema('start': String) {
+                }
+                required schema('end': String) {
+                }
+                required schema('externalUnavailabilityIdentifier': String) {
+                }
+            }
+
+
+        }
+
+         */
+    }
+}

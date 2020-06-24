@@ -1,0 +1,39 @@
+package components
+
+
+api {
+
+
+    path("/thing") {
+        operation(OperationType.GET, 'doobiedoo') {
+
+            response('200') {
+                description "Hooray"
+                header('X-Pagination-Inline') {
+                    schema {
+                        type "string"
+                    }
+                }
+
+                header('X-Pagination-Link') {
+                    schema {
+                        ref schema: 'XPaginationHeader'
+                    }
+
+                }
+
+
+            }
+
+        }
+
+
+    }
+
+    components {
+        schema("XPaginationHeader") {
+            schema(currentPage:int)
+            schema(nextPage:int)
+        }
+    }
+}

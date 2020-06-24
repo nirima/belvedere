@@ -1,0 +1,82 @@
+// Commons
+import groovy.transform.Field
+
+class Licenser {
+      DSL dsl;
+
+      	Licenser(DSL dsl) {
+      		this.dsl = dsl;
+      	}
+
+      	def buildModule(os) {
+
+      	        println "bmoS-> " + os;
+
+        		os.info {
+                   license {
+                       name "MIT"
+                   }
+                   title "Swagger Petstore"
+                   version "1.0.0"
+               }
+
+               
+        	}
+
+}
+
+
+class DSL {
+    def outer_script;
+
+    DSL(outer_script) {
+        println "OS-> " + outer_script;
+      this.outer_script = outer_script;
+    }
+
+    def process(c, item) {
+        println "PROC";
+        println "pOS-> " + outer_script;
+    	c.delegate = item;
+    	c.resolveStrategy = Closure.DELEGATE_FIRST
+    	c();
+
+    	println "2OS-> " + outer_script;
+    	item.buildModule(outer_script);
+    	println "3OS-> " + outer_script;
+
+    }
+
+    def my_license(Closure c) {
+        println "my_license " + c
+        process( c, new Licenser(this) );
+    }
+}
+
+
+/****************************************************************************************************
+ * This is the call defined.
+ * We call the closure which will define all the settings for us, then use the options
+ * to call functions below. Each of these will usually either determine whether a particular
+ * module is even needed, or whether there are internal options that are required.
+ */
+def call(Closure c) {
+
+    // closure is something like
+    // {
+    //    my_license {}
+    // }
+
+
+    System.out.println(this);
+
+    DSL dsl = new DSL(this);
+
+
+
+    c.delegate = dsl;
+    c.resolveStrategy = Closure.DELEGATE_FIRST
+
+
+    def x = c();
+}

@@ -1,0 +1,22 @@
+// Show calling of a function implementing API fragments
+// Show inside a block
+
+def defineEnv() {
+    return {
+        println "DEFINE";
+
+
+        license {
+            name "MIT"
+        }
+
+    }
+}
+
+api {
+
+    info {
+        evaluate this.defineEnv();
+    }
+
+}

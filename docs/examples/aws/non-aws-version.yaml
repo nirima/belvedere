@@ -1,0 +1,31 @@
+# ---------------------------------------------------------------------------------------------- 
+# ** AUTO-GENERATED FILE ** CHANGES WILL BE OVERWRITTEN ** 
+# Converted by Belvedere 
+# http://github.com/magnayn/belvedere 
+# Mon Oct 21 17:09:39 BST 2019
+# ---------------------------------------------------------------------------------------------- 
+
+openapi: 3.0.2
+security:
+- jwt: []
+paths:
+  /test:
+    post:
+      description: send Something
+      operationId: postTest
+      responses:
+        200:
+          description: OK
+components:
+  securitySchemes:
+    APIAuthorizer:
+      type: apiKey
+      name: AuthorizationToken
+      in: header
+      x-amazon-apigateway-authtype: custom
+      x-amazon-apigateway-authorizer:
+        authorizerUri: arn:aws:apigateway:eu-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-2:529795854321:function:lambda_interop_auth/invocations
+        authorizerCredentials: arn:aws:iam::529795854321:role/iam_for_lambda
+        authorizerResultTtlInSeconds: 300
+        type: token
+

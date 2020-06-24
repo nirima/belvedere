@@ -1,0 +1,24 @@
+package modular
+
+import groovy.transform.Field
+
+//println "Loading...";
+
+@Field
+String textProp = 'default';
+
+def call() {
+     println "DEFINE";
+
+   
+    info {
+        license {
+            name "${textProp}"
+        }
+        title "Swagger Petstore"
+        version "1.0.0"
+    }
+
+}
+
+return this;

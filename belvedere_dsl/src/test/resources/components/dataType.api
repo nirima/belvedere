@@ -1,0 +1,22 @@
+package components
+
+api {
+    components {
+        schema('TimeSpan') {
+            required schema('from': String) {
+                pattern '^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$'
+                description "Time from, 24hr format"
+                example "07:00"
+            }
+            schema('to': String) {
+                pattern '^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$'
+                description "Time from, 24hr format"
+                example "17:30"
+            }
+            schema(dateOnly:Date)
+            schema(dateTime:DateTime)
+        }
+
+
+    }
+}

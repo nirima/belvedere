@@ -1,0 +1,118 @@
+openapi {
+    components {
+        schema('Pet') {
+            schema {
+                type "object"
+                schema {
+                    type "integer"
+                    format "int64"
+                }
+                schema {
+                    type "string"
+                }
+                schema {
+                    type "string"
+                }
+            }
+
+        }
+        schema('Pets') {
+            schema {
+                type "array"
+                schema {
+                    $ref "#/components/schemas/Pet"
+                }
+            }
+
+        }
+        schema('Error') {
+            schema {
+                type "object"
+                schema {
+                    type "integer"
+                    format "int32"
+                }
+                schema {
+                    type "string"
+                }
+            }
+
+        }
+    }
+    openapi "3.0.0"
+    pathitem {
+        operation {
+            summary "Create a pet"
+            operationId "createPets"
+            apiresponse {
+                description "Null response"
+            }
+            apiresponse {
+                description "unexpected error"
+                mediatype {
+                    schema {
+                        $ref "#/components/schemas/Error"
+                    }
+                }
+            }
+        }
+        operation {
+            summary "List all pets"
+            operationId "listPets"
+            apiresponse {
+                header {
+                    schema {
+                        type "string"
+                    }
+                    explode "false"
+                    description "A link to the next page of responses"
+                    styleenum {
+                        class io.swagger.v3.oas.models.headers.Header$StyleEnum}
+                }
+                description "A paged array of pets"
+                mediatype {
+                    schema {
+                        $ref "#/components/schemas/Pets"
+                    }
+                }
+            }
+            apiresponse {
+                description "unexpected error"
+                mediatype {
+                    schema {
+                        $ref "#/components/schemas/Error"
+                    }
+                }
+            }
+        }
+    }
+    pathitem {
+        operation {
+            summary "Info for a specific pet"
+            operationId "showPetById"
+            apiresponse {
+                description "Expected response to a valid request"
+                mediatype {
+                    schema {
+                        $ref "#/components/schemas/Pet"
+                    }
+                }
+            }
+            apiresponse {
+                description "unexpected error"
+                mediatype {
+                    schema {
+                        $ref "#/components/schemas/Error"
+                    }
+                }
+            }
+        }
+    }
+    info {
+        license {
+            name "MIT"
+        }
+        title "Swagger Petstore"
+        version "1.0.0"
+    }
+}

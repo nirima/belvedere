@@ -1,0 +1,5 @@
+#!/bin/bash
+
+JAR=~/.m2/repository/com/nirima/belvedere/belvedere-cli/0.1/belvedere-cli-0.1-onejar.jar
+
+java -jar ${JAR} $@

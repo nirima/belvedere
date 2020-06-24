@@ -1,0 +1,54 @@
+api {
+
+    security('jwt') {
+     
+    }
+
+    path("/test") {
+        operation(OperationType.POST, 'registerWorker') {
+
+            description 'Provide worker details for inclusion into the Allocate ecosystem. The platform will accept the worker information, and respond either synchronously or asynchronously with the allocate worker identifier. This may entail an on-boarding process, so the final response may require human interaction before it can be completed.'
+
+            //tags "Worker"
+
+            requestBody {
+                description "Worker information"
+                required true
+
+                content('application/json') {
+                    schema {
+                        ref schema: 'Person'
+                    }
+
+                }
+            }
+            response('200') {
+                description "The worker has been registered successfully"
+                content('application/json') {
+                    schema {
+                        ref schema: 'WorkerRegistrationResponse'
+                    }
+                }
+            }
+        }
+    }
+
+    components {
+        security('jwt') {
+            type "http"
+            scheme "bearer"
+            bearerFormat "JWT"
+            description "JSON Web Token previously obtained from the Allocate authentication server"
+        }
+
+
+    }
+    
+    info {
+        license {
+            name "MIT"
+        }
+        title "Swagger Petstore"
+        version "1.0.0"
+    }
+}
